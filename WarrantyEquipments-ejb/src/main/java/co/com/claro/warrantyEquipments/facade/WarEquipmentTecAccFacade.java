@@ -5,7 +5,7 @@
  */
 package co.com.claro.warrantyEquipments.facade;
 
-import co.com.claro.warrantyEquipments.entity.WarCav;
+import co.com.claro.warrantyEquipments.entity.WarEquipmentTecAcc;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author jimenezelkg
  */
 @Stateless
-public class WarCavFacade extends AbstractFacade<WarCav> {
+public class WarEquipmentTecAccFacade extends AbstractFacade<WarEquipmentTecAcc> {
 
     @PersistenceContext(unitName = "co.com.claro.warrantyEquipments_WarrantyEquipments-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
@@ -26,12 +26,12 @@ public class WarCavFacade extends AbstractFacade<WarCav> {
         return em;
     }
 
-    public WarCavFacade() {
-        super(WarCav.class);
+    public WarEquipmentTecAccFacade() {
+        super(WarEquipmentTecAcc.class);
     }
 
-    public List<WarCav> queryCodeCav(String codeCav) {
-        List<WarCav> list = (List<WarCav>) em.createQuery("SELECT w FROM WarCav w WHERE w.codeCav='" + codeCav + "'").getResultList();
+    public List<WarEquipmentTecAcc> queryCode(String code) {
+        List<WarEquipmentTecAcc> list = (List<WarEquipmentTecAcc>) em.createQuery("SELECT w FROM WarEquipmentTecAcc w WHERE w.code='" + code + "'").getResultList();
         if (!list.isEmpty()) {
             return list;
         } else {

@@ -5,8 +5,8 @@
  */
 package co.com.claro.warrantyEquipments.ws;
 
-import co.com.claro.warrantyEquipments.entity.WarCav;
-import co.com.claro.warrantyEquipments.facade.WarCavFacade;
+import co.com.claro.warrantyEquipments.entity.WarEquipmentTecAcc;
+import co.com.claro.warrantyEquipments.facade.WarEquipmentTecAccFacade;
 import co.com.claro.warrantyEquipments.model.DataResponse;
 import co.com.claro.warrantyEquipments.model.GenericResponse;
 import java.util.List;
@@ -28,7 +28,7 @@ import javax.ejb.TransactionManagement;
 public class warrantyEquipmentsService {
 
     @EJB
-    private WarCavFacade warCavFacade;
+    private WarEquipmentTecAccFacade equipmentFacade;
 
     public warrantyEquipmentsService() {
     }
@@ -36,29 +36,28 @@ public class warrantyEquipmentsService {
     @GET
     @Consumes("application/json")
     @Produces("application/json")
-    @Path("queryByCodeCav")
-    public DataResponse queryByCodeCav(@QueryParam("codeCav") String codeCav) {
+    @Path("queryByCode")
+    public DataResponse queryByCode(@QueryParam("code") String code) {
         DataResponse responseEnd = new DataResponse();
         try {
-            if ("".equals(codeCav) || codeCav == null) {
-                GenericResponse response = new GenericResponse(false, "Por favor enviar el código del CAV (codeCav).");
+            if ("".equals(code) || code == null) {
+                GenericResponse response = new GenericResponse(false, "Por favor enviar el código del equipo a consultar (code).");
                 responseEnd.setCavs(null);
                 responseEnd.setResponse(response);
             } else {
-//                List<GarCav> list = garCavFacade.findAll();
-                List<WarCav> list = warCavFacade.queryCodeCav(codeCav);
+                List<WarEquipmentTecAcc> list = equipmentFacade.queryCode(code);
                 if (list != null) {
                     GenericResponse response = new GenericResponse(true, "Consulta exitosa.");
                     responseEnd.setCavs(list);
                     responseEnd.setResponse(response);
                 } else {
-                    GenericResponse response = new GenericResponse(false, "No se encontraron registros con el código de CAV: " + codeCav);
+                    GenericResponse response = new GenericResponse(false, "No se encontraron registros con el código: " + code);
                     responseEnd.setCavs(null);
                     responseEnd.setResponse(response);
                 }
             }
         } catch (Exception e) {
-            GenericResponse response = new GenericResponse(false, "Ocurrió un error al consultar los CAVs. Detalle: " + e.getMessage());
+            GenericResponse response = new GenericResponse(false, "Ocurrió un error al consultar los equipos. Detalle: " + e.getMessage());
             responseEnd.setCavs(null);
             responseEnd.setResponse(response);
         }
